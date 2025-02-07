@@ -1,4 +1,4 @@
-nginx/ssl/
-wordpress/wp-config.php
-mariadb/init.sql
+srcs/nginx/ssl/
+srcs/wordpress/wp-config.php
+srcs/mariadb/init.sql
 .env
