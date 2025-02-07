@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - "443:443"
+      - "9000:9000"  # Expose php-fpm port
+    depends_on:
+      - wordpress
+    restart: always
+
+  wordpress:
+    build: ./wordpress
+    container_name: wordpress
+    volumes:
+      - ./data/wp:/var/www/html/wordpress
+    ports:
+      - "9000:9000"  # Expose php-fpm port
+    depends_on:
+      - mariadb
+    restart: always
+
+  mariadb:
+    build: ./mariadb
+    container_name: mariadb
+    volumes:
+      - ./data/db:/var/lib/mysql
+  environment:
+    MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    MYSQL_USER: ${MYSQL_USER}
+    MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - "3306:3306"  # Expose MariaDB port
+    restart: always
+
+volumes:
+  db:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/olamrabt/data/db
+      o: bind
+  wp:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/olamrabt/data/wp
+      o: bind

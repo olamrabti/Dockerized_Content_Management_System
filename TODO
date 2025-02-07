@@ -1,0 +1,15 @@
+[ ] must use docker compose.
+[ ] Each Docker image must have the same name as its corresponding service. Each service has to run in a dedicated container. (alpine / debian)
+[ ] have to write Dockerfiles, one per service. The Dockerfiles must be called in docker-compose.yml by Makefile.
+
+//setup :
+[ ] A Docker container that contains NGINX with TLSv1.2 or TLSv1.3 only.
+[ ] A Docker container that contains WordPress + php-fpm (it must be installed and configured) only without nginx.
+[ ] A Docker container that contains MariaDB only without nginx.
+[ ] A volume that contains WordPress database.
+[ ] A second volume that contains WordPress website files.
+[ ] A docker-network that establishes the connection between containers. containers have to restart in case of a crash.
+[ ] In WordPress database, there must be two users, one of them being the administrator. The administrator’s username can’t contain admin/Admin or administrator/Administrator
+[ ] volumes will be available in the /home/olamrabt/data folder of the host machine using Docker.
+[ ] To make things simpler, must configure domain name so it points to local IP address. This domain name must be olamrabt.42.fr.
+[ ] NGINX container must be the only entrypoint into infrastructure via the port 443 only, using the TLSv1.2 or TLSv1.3 protocol.
