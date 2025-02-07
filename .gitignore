@@ -1,4 +1,4 @@
 srcs/nginx/ssl/
 srcs/wordpress/wp-config.php
 srcs/mariadb/init.sql
-.env
+.env\
