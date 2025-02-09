@@ -6,9 +6,10 @@ services:
     container_name: nginx
     ports:
       - "443:443"
-      - "9000:9000"  # Expose php-fpm port
     depends_on:
       - wordpress
+    networks:
+      - app-network
     restart: always
 
   wordpress:
@@ -16,10 +17,10 @@ services:
     container_name: wordpress
     volumes:
       - ./data/wp:/var/www/html/wordpress
-    ports:
-      - "9000:9000"  # Expose php-fpm port
     depends_on:
       - mariadb
+    networks:
+      - app-network
     restart: always
 
   mariadb:
@@ -27,13 +28,10 @@ services:
     container_name: mariadb
     volumes:
       - ./data/db:/var/lib/mysql
-  environment:
-    MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    MYSQL_USER: ${MYSQL_USER}
-    MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    MYSQL_DATABASE: ${MYSQL_DATABASE}
-    ports:
-      - "3306:3306"  # Expose MariaDB port
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    networks:
+      - app-network
     restart: always
 
 volumes:
@@ -49,3 +47,7 @@ volumes:
       type: none
       device: /home/olamrabt/data/wp
       o: bind
+
+networks:
+  app-network:
+    driver: bridge
