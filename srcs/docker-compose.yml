@@ -11,6 +11,8 @@ services:
     networks:
       - app-network
     restart: always
+    environment:
+      - NGINX_HOST=olamrabt.42.fr
 
   wordpress:
     build: ./wordpress
@@ -22,6 +24,11 @@ services:
     networks:
       - app-network
     restart: always
+    environment:
+      - WORDPRESS_DB_HOST=mariadb
+      - WORDPRESS_DB_USER=$MYSQL_USER
+      - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
+      - WORDPRESS_DB_NAME=$MYSQL_DATABASE
 
   mariadb:
     build: ./mariadb
@@ -29,7 +36,10 @@ services:
     volumes:
       - ./data/db:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
     networks:
       - app-network
     restart: always
