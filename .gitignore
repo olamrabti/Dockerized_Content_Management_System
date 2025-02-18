@@ -3,3 +3,4 @@ srcs/data/
 srcs/wordpress/wp-config.php
 srcs/mariadb/init.sql
 .env\
+srcs/.env

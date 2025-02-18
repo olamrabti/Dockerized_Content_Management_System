@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM debian:bookworm
 
 # Install MariaDB
 RUN apt-get update && apt-get install -y mariadb-server && rm -rf /var/lib/apt/lists/
@@ -16,5 +16,6 @@ RUN chmod 777 /maria.sh
 # Expose MariaDB port
 EXPOSE 3306
 
-# Run MariaDB safely & execute the init script manually
-CMD ["./maria.sh"]
+CMD [ "./maria.sh" ]
+
+

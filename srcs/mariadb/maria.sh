@@ -1,29 +1,21 @@
 #!/bin/bash
 
-# Start MariaDB service to run initialization
-service mariadb start
+# Start MariaDB in the background
+mysqld --user=mysql --skip-networking --socket=/run/mysqld/mysqld.sock &
 
 # Wait until MariaDB is ready
-until mysqladmin ping --silent; do
-    echo "Waiting for MariaDB to start..."
-    sleep 2
-done
+sleep 10
 
 
+# Run database initialization commands
 
-# Run initialization commands directly
-mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS wordpress;"
-mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "CREATE USER IF NOT EXISTS 'wpuser'@'%' IDENTIFIED BY 'wppassword';"
-mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'%';"
+mariadb -u root -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
+mariadb -u root -e "CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
+mariadb -u root -e "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';"
+mariadb -u root -e "FLUSH PRIVILEGES;"
 
-# TODO check the subject
+# Stop the temporary MariaDB process
+killall mysqld
 
-# mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "CREATE USER IF NOT EXISTS 'superuser'@'%' IDENTIFIED BY 'superpassword';"
-# mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "GRANT ALL PRIVILEGES ON *.* TO 'superuser'@'%';"
-mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "FLUSH PRIVILEGES;"
-
-# Stop MariaDB service to switch to `mysqld_safe`
-service mariadb stop
-
-# Start MariaDB in the foreground
-exec mysqld_safe
+# Start MariaDB in the foreground to keep the container running
+exec mysqld --user=mysql --socket=/run/mysqld/mysqld.sock --bind-address=0.0.0.0

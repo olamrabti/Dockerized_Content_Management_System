@@ -1,18 +1,20 @@
 version: '3.8'
 
 services:
-  nginx:
-    build: ./nginx
-    container_name: nginx
-    ports:
-      - "443:443"
-    depends_on:
-      - wordpress
+
+  mariadb:
+    build: ./mariadb
+    container_name: mariadb
+    volumes:
+      - ./data/db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
     networks:
       - app-network
     restart: always
-    environment:
-      - NGINX_HOST=olamrabt.42.fr
 
   wordpress:
     build: ./wordpress
@@ -30,19 +32,18 @@ services:
       - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
       - WORDPRESS_DB_NAME=$MYSQL_DATABASE
 
-  mariadb:
-    build: ./mariadb
-    container_name: mariadb
-    volumes:
-      - ./data/db:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
-      - MYSQL_USER=$MYSQL_USER
-      - MYSQL_PASSWORD=$MYSQL_PASSWORD
-      - MYSQL_DATABASE=$MYSQL_DATABASE
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - "443:443"
+    depends_on:
+      - wordpress
     networks:
       - app-network
     restart: always
+    environment:
+      - NGINX_HOST=localhost
 
 volumes:
   db:

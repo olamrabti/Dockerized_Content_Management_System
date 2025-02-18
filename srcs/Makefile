@@ -10,6 +10,9 @@ down:
 	docker-compose down
 
 clean: down
-	docker system prune -a --volumes
+	docker-compose down --volumes
+	docker network prune
+	docker volume prune
+	docker system prune
 
 re: clean all
