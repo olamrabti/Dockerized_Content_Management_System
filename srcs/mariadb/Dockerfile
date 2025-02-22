@@ -7,6 +7,8 @@ RUN apt-get update && apt-get install -y mariadb-server expect && rm -rf /var/li
 RUN mkdir -p /var/lib/mysql /var/run/mysqld \
     && chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
 
+RUN echo "[mysqld]\nlower_case_table_names=1" > /etc/mysql/conf.d/case.cnf
+
 # Copy initialization script
 COPY maria.sh /maria.sh
 

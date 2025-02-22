@@ -6,7 +6,7 @@ services:
     build: ./mariadb
     container_name: mariadb
     volumes:
-      - /var/lib/mysql
+      - db:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
       - MYSQL_USER=$MYSQL_USER
@@ -20,7 +20,7 @@ services:
     build: ./wordpress
     container_name: wordpress
     volumes:
-      - /var/www/html/wordpress
+      - wp:/var/www/html/wordpress
     depends_on:
       - mariadb
     networks:
@@ -59,13 +59,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: ./data/db
+      device: ${PWD}/data/db
       o: bind
   wp:
     driver: local
     driver_opts:
       type: none
-      device: ./data/wp
+      device: ${PWD}/data/wp
       o: bind
 
 networks:

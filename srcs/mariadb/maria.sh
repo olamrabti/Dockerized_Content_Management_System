@@ -3,8 +3,11 @@
 # Start MariaDB in the background
 mysqld --user=mysql --skip-networking --socket=/run/mysqld/mysqld.sock &
 
+echo "Initializing MariaDB database..."
+mysql_install_db --user=mysql --ldata=/var/lib/mysql
+
 # Wait until MariaDB is ready
-sleep 10
+sleep 5
 
 
 # Run database initialization commands

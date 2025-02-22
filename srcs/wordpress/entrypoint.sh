@@ -32,6 +32,8 @@ if [ ! -f /var/www/wordpress/wp-config.php ]; then
     # install wordpress with the given title, admin username, password and email
     wp core install --url="$DOMAIN_NAME" --title="${WP_TITLE}" --admin_user="${WP_ADMIN_N}" --admin_password="${WP_ADMIN_P}" --admin_email="${WP_ADMIN_E}" --allow-root
     #create a new user with the given username, email, password and role
+    wp user create "$WP_U_NAME" "$WP_U_EMAIL" --role="$WP_U_ROLE" --user_pass="$WP_U_PASS" --allow-root
+
     # mnb3d
     echo "WordPress installation complete!"
 else
