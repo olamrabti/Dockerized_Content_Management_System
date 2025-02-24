@@ -15,4 +15,7 @@ clean: down
 	docker volume prune
 	docker system prune
 
+fclean: clean
+	rm -rf /Users/olamrabt/Desktop/1337-Inception/srcs/data/wp/*
+
 re: clean all

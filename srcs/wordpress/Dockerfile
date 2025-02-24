@@ -22,7 +22,7 @@ RUN chmod +x /entrypoint.sh
 # Expose port 9000 for PHP-FPM
 EXPOSE 9000
 
-WORKDIR /var/www/html
+WORKDIR /var/www/wordpress
 
 # Start PHP-FPM 7.4 using the entrypoint script
 ENTRYPOINT [ "/entrypoint.sh" ]

@@ -16,8 +16,6 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 # Copy Nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
 
-WORKDIR /var/www/html/
-
 # Expose port 443
 EXPOSE 443
 

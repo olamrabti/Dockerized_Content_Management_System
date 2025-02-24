@@ -20,7 +20,7 @@ services:
     build: ./wordpress
     container_name: wordpress
     volumes:
-      - wp:/var/www/html/wordpress
+      - wp:/var/www/wordpress
     depends_on:
       - mariadb
     networks:
