@@ -17,5 +17,6 @@ clean: down
 
 fclean: clean
 	rm -rf /Users/olamrabt/Desktop/1337-Inception/srcs/data/wp/*
+	# rm -rf /Users/olamrabt/Desktop/1337-Inception/srcs/data/db/*
 
 re: clean all

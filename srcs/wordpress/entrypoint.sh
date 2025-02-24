@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Waiting for database connection..."
-sleep 5
+sleep 10
 
 
 # wp-cli installation
