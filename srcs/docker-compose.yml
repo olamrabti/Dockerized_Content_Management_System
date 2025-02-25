@@ -53,21 +53,19 @@ services:
     networks:
       - app-network
     restart: always
-    environment:
-      - NGINX_HOST=localhost
 
 volumes:
   db:
     driver: local
     driver_opts:
       type: none
-      device: ${PWD}/data/db
+      device: /home/olamrabt/data/db
       o: bind
   wp:
     driver: local
     driver_opts:
       type: none
-      device: ${PWD}/data/wp
+      device: /home/olamrabt/data/wp
       o: bind
 
 networks:
