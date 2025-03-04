@@ -13,3 +13,6 @@
 [ ] volumes will be available in the /home/olamrabt/data folder of the host machine using Docker.
 [ ] To make things simpler, must configure domain name so it points to local IP address. This domain name must be olamrabt.42.fr.
 [ ] NGINX container must be the only entrypoint into infrastructure via the port 443 only, using the TLSv1.2 or TLSv1.3 protocol.
+[ ] modifs in volumes try removing unecessary options 
+[ ] mkdirs and cd´s to be replaced with workdir
+[ ] overall, optimize.
