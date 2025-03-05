@@ -8,7 +8,6 @@ RUN apt-get install -y \
     php7.4-fpm \
     php-mysql \
     mariadb-client \
-    sendmail\
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
