@@ -1,15 +1,8 @@
 #!/bin/bash
 
-echo "Waiting for database connection..."
-sleep 10
-
-
 
 if [ ! -f /var/www/wordpress/wp-config.php ]; then
     echo "Installing WordPress..."
-    # go to wordpress directory
-    mkdir -p /var/www/wordpress/
-
     # wp-cli installation
     curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
     # wp-cli permission
@@ -17,6 +10,8 @@ if [ ! -f /var/www/wordpress/wp-config.php ]; then
     # wp-cli move to bin
     mv wp-cli.phar /usr/local/bin/wp
     wp core download --path=/var/www/wordpress/ --force  --allow-root
+    # Set SENDMAIL to false to disable email notifications
+    export SENDMAIL=false
     # create wp-config.php file with database details
     wp config create --dbhost="${WORDPRESS_DB_HOST}" --dbname="${WORDPRESS_DB_NAME}" --dbuser="${WORDPRESS_DB_USER}" --dbpass="${WORDPRESS_DB_PASSWORD}" --allow-root
     # install wordpress with the given title, admin username, password and email

@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   mariadb:
-    build: ./mariadb
+    build: ./requirements/mariadb
     container_name: mariadb
     volumes:
       - db:/var/lib/mysql
@@ -15,14 +15,21 @@ services:
     networks:
       - app-network
     restart: always
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
 
   wordpress:
-    build: ./wordpress
+    build: ./requirements/wordpress
     container_name: wordpress
     volumes:
       - wp:/var/www/wordpress
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     networks:
       - app-network
     restart: always
@@ -42,7 +49,7 @@ services:
       - WP_U_ROLE=$WP_U_ROLE
 
   nginx:
-    build: ./nginx
+    build: ./requirements/nginx
     container_name: nginx
     volumes:
       - wp:/var/www/wordpress
@@ -56,16 +63,14 @@ services:
 
 volumes:
   db:
-    driver: local
     driver_opts:
-      type: none
       device: /home/olamrabt/data/db
+      type: none
       o: bind
   wp:
-    driver: local
     driver_opts:
-      type: none
       device: /home/olamrabt/data/wp
+      type: none
       o: bind
 
 networks:
