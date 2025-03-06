@@ -14,5 +14,6 @@ clean: down
 	docker network prune 
 	docker volume prune 
 	docker system prune 
+	docker image prune 
 
 re: clean all

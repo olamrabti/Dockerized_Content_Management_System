@@ -3,6 +3,7 @@ version: '3.8'
 services:
 
   mariadb:
+    image: mariadb:olamrabt
     build: ./requirements/mariadb
     container_name: mariadb
     volumes:
@@ -23,6 +24,7 @@ services:
       timeout: 10s
 
   wordpress:
+    image: wordpress:olamrabt
     build: ./requirements/wordpress
     container_name: wordpress
     volumes:
@@ -49,6 +51,7 @@ services:
       - WP_U_ROLE=$WP_U_ROLE
 
   nginx:
+    image: nginx:olamrabt
     build: ./requirements/nginx
     container_name: nginx
     volumes:
