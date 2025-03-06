@@ -11,9 +11,9 @@ down:
 
 clean: down
 	docker-compose -f ./srcs/docker-compose.yml down  --volumes
+	docker system prune -a
 	docker network prune 
-	docker volume prune 
-	docker system prune 
-	docker image prune 
+	docker volume prune -a
+	docker image prune -a
 
 re: clean all
