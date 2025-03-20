@@ -1,2 +1,2 @@
 # 1337-Inception
-System Administration &amp; Docker
+Dockerized CMS: Containerized WordPress with Nginx & MariaDB.
